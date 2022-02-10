@@ -1,0 +1,79 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head><title>Calculator</title></head>
+<body>
+  Welcome to calculator. Choose a button below to execute your desired operation.
+    <p>
+      First Input: <input type="text" name="num1" value="0" id="num1"/>
+      Second Input: <input type="text" name="num2" value="0" id="num2"/><br>
+    </p>
+  <form name="choose_op">
+    <p>
+      <strong>Operation</strong>
+      <input type="radio" name="op" id="opadd"/> <label for="opadd">Add</label>
+      <input type="radio" name="op" id="opsub"/> <label for="opsub">Subtract</label>
+      <input type="radio" name="op" id="opmult"/> <label for="opmult">Multiply</label>
+      <input type="radio" name="op" id="opdiv"/> <label for="opdiv">Divide</label>
+    </p>
+  </form>
+    <p id="result"></p>
+  <script>
+    let num1 = 0;
+    let num2 =0;
+    var operations = document.getElementsByName("op");
+
+    document.getElementById("num1").addEventListener("change", function(event){
+      num1 = parseInt(event.target.value);
+      changeResult(getOp());
+    }, false);
+
+    document.getElementById("num2").addEventListener("change", function(event){
+      num2 = parseInt(event.target.value);
+      changeResult(getOp());
+    }, false);
+
+    for (var i=0; i < operations.length; i++){
+      operations[i].addEventListener("change", function(event){
+        changeResult(event.target.id);
+      }, false);
+    }
+
+    function getOp(){
+      if (document.getElementById("opadd").checked){
+        return "opadd";
+      } else if (document.getElementById("opsub").checked){
+        return "opsub";
+      } else if (document.getElementById("opmult").checked){
+        return "opmult";
+      } else if (document.getElementById("opdiv").checked){
+        return "opdiv";
+      } else{
+        return "not selected"
+      }
+    }
+
+    function changeResult(op){
+      let result;
+      switch (op) {
+        case "opadd":
+          result = num1 + num2;
+          break;
+        case "opsub":
+          result = num1 - num2;
+          break;
+        case "opmult":
+          result = num1 * num2;
+          break;
+        case "opdiv":
+          if (num2 == 0){
+            alert("You cannot divide by 0");
+          }
+          result = num1 / num2;
+          break;
+        default:
+          result = "displayed here once you choose the operation to perform"
+      }
+      document.getElementById("result").textContent = "The result of your computation is " + result;
+    }
+  </script>
+</body>
